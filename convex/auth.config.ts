@@ -1,7 +1,7 @@
 export default {
 	providers: [
 		{
-			domain: "https://dear-sole-2.clerk.accounts.dev/",
+			domain: "https://sterling-squid-51.clerk.accounts.dev/",
 			applicationID: "convex",
 		},
 	],
