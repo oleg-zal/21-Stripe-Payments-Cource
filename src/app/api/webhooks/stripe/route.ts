@@ -102,14 +102,16 @@ async function handleSubscriptionUpsert(subscription: Stripe.Subscription, event
 	}
 
 	try {
+		const subscriptionItem = subscription.items.data[0];
+
 		await convex.mutation(api.subscriptions.upsertSubscription, {
 			userId: user._id,
 			stripeSubscriptionId: subscription.id,
 			status: subscription.status,
 			planType: subscription.items.data[0].plan.interval as "month" | "year",
-			currentPeriodStart: subscription.current_period_start,
-			currentPeriodEnd: subscription.current_period_end,
-			cancelAtPeriodEnd: subscription.cancel_at_period_end,
+			currentPeriodStart: subscriptionItem.current_period_start,
+			currentPeriodEnd: subscriptionItem.current_period_end,
+			cancelAtPeriodEnd: subscription.cancel_at_period_end ?? false,
 		});
 		console.log(`Successfully processed ${eventType} for subscription ${subscription.id}`);
 
